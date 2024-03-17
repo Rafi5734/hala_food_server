@@ -21,14 +21,14 @@ const postCategory = expressHandler(async (req, res) => {
   res.status(200).json(category);
 });
 
-// const getOneProduct = expressHandler(async (req, res) => {
-//   const oneProduct = await Products.findById(req.params.id);
+const getOneCategory = expressHandler(async (req, res) => {
+  const oneCategory = await Category.findById(req.params.id);
 
-//   if (!oneProduct) {
-//     res.status(500).json({ message: "Product not found" });
-//   }
-//   res.status(200).json(oneProduct);
-// });
+  if (!oneCategory) {
+    res.status(500).json({ message: "Category not found" });
+  }
+  res.status(200).json(oneCategory);
+});
 
 const updateCategory = expressHandler(async (req, res) => {
   const categoryUpdate = await Category.findByIdAndUpdate(
@@ -57,13 +57,10 @@ const deleteCategory = expressHandler(async (req, res) => {
   }
 });
 
-
-
-
-
 module.exports = {
   getCategory,
   postCategory,
   updateCategory,
   deleteCategory,
+  getOneCategory,
 };
