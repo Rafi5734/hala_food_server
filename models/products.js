@@ -10,7 +10,7 @@ const productsSchema = new mongoose.Schema({
   weight: { type: String },
   quantity: { type: Number },
   SKUId: { type: String },
-  status: {type: String},
+  status: { type: String },
   reviews: [
     {
       comment_id: {
@@ -21,6 +21,7 @@ const productsSchema = new mongoose.Schema({
       text: { type: String },
     },
   ],
+  subCategory: { type: String },
 });
 
 const products = mongoose.model("all_products", productsSchema);

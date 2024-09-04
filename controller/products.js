@@ -3,7 +3,6 @@ const Products = require("../models/products")
 
 const getProducts = expressHandler(async (req, res) => {
   const products = await Products.find();
-  // console.log(users.length);
 
   if (!products) {
     res.status(404).json({ error: "Products not found" });
@@ -23,6 +22,7 @@ const postProducts = expressHandler(async (req, res) => {
     SKUId: req.body.SKUId,
     status: req.body.status,
     reviews: req.body.reviews,
+    subCategory: req.body.subCategory,
   });
 
   if (!products) {
@@ -40,7 +40,6 @@ const getOneProduct = expressHandler(async (req, res) => {
   res.status(200).json(oneProduct);
 });
 
-
 const updateProduct = expressHandler(async (req, res) => {
   const productUpdate = await Products.findByIdAndUpdate(
     req.params.id,
@@ -54,6 +53,7 @@ const updateProduct = expressHandler(async (req, res) => {
       quantity: req.body.quantity,
       SKUId: req.body.SKUId,
       reviews: req.body.reviews,
+      subCategory: req.body.subCategory,
     },
     {
       new: true,
@@ -77,7 +77,7 @@ const deleteProduct = expressHandler(async (req, res) => {
 });
 
 const postComment = expressHandler(async (req, res) => {
-  const productId = req.params.id; 
+  const productId = req.params.id;
   const { username, text } = req.body;
 
   try {
@@ -88,10 +88,8 @@ const postComment = expressHandler(async (req, res) => {
       return res.status(404).json({ error: "Product not found" });
     }
 
-    
     product.reviews.push({ username, text });
 
-    
     const updatedProduct = await product.save();
 
     res.status(201).json(updatedProduct);
@@ -104,9 +102,6 @@ const postComment = expressHandler(async (req, res) => {
 const deleteComment = expressHandler(async (req, res) => {
   const productId = req.params.id; // Assuming you pass the product ID as a parameter in the URL
   const commentId = req.params.commentId;
-  console.log("comment productId", productId);
-  console.log("comment commentId", commentId);
-
 
   try {
     // Find the product by ID
@@ -120,10 +115,6 @@ const deleteComment = expressHandler(async (req, res) => {
     const commentIndex = product.reviews.findIndex(
       (comment) => comment._id.toString() === commentId
     );
-    // console.log("comment commentIndex", commentIndex);
-    // if (commentIndex === -1) {
-    //   return res.status(404).json({ error: "Comment not found" });
-    // }
 
     // Remove the comment from the reviews array
     product.reviews.splice(commentIndex, 1);
