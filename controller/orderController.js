@@ -6,12 +6,11 @@ const addToCart = async (req, res) => {
     const { userId } = req.params;
     const { _id } = req.body;
 
-    // Find the user by ID
-    const user = await User.findById(userId);
+    // const user = await User.findById(userId);
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+    // if (!user) {
+    //   return res.status(404).json({ error: "User not found" });
+    // }
 
     // Find the product by ID
     const product = await Products.findById(_id);
@@ -21,8 +20,8 @@ const addToCart = async (req, res) => {
     }
     console.log("product", product);
     // Add the product to the user's cart
-    user.cart.push(product);
-    await user.save();
+    User.cart.push(product);
+    await User.save();
 
     res.json({ message: "Product added to the cart", product });
   } catch (error) {
@@ -31,35 +30,7 @@ const addToCart = async (req, res) => {
   }
 };
 
-// const updateCartItem = async (req, res) => {
-//   try {
-//     const { userId } = req.params;
-//     const { _id, quantity } = req.body;
 
-//     const user = await User.findById(userId);
-
-//     if (!user) {
-//       return res.status(404).json({ error: "User not found" });
-//     }
-
-//     const existingCartItem = user.cart.find(
-//       (item) => item._id.toString() === _id
-//     );
-
-//     if (!existingCartItem) {
-//       return res.status(404).json({ error: "Product not found in the cart" });
-//     }
-
-//     // Update the quantity of the product in the cart
-//     existingCartItem.quantity = quantity;
-//     await user.save();
-//     console.log("cart: user.cart", user.cart);
-//     res.json({ message: "Cart item updated successfully", cart: user.cart });
-//   } catch (error) {
-//     console.error("Error updating cart item:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// };
 const updateCartItem = async (req, res) => {
   try {
     const { userId } = req.params;
