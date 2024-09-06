@@ -7,6 +7,7 @@ const { categoryRouter } = require("./routes/categoryRoutes");
 const { checkoutRouter } = require("./routes/checkoutRoutes");
 const { authRouter } = require("./routes/authRoutes");
 const { orderRouter } = require("./routes/cartRoutes");
+const cartRoutes = require("./cart");
 // DB_PASS = YNnidN2YDISvRoxP;
 // DB_NAME = hala_food;
 const app = express();
@@ -31,6 +32,7 @@ app.use(express.static("public"));
     app.use("/checkout", checkoutRouter);
     app.use("/user", authRouter);
     app.use("/order", orderRouter);
+    app.use("/cart", cartRoutes);
     // app.use("/products", productsRouter);
     // app.use("/orders", ordersRouter);
   } catch (err) {
