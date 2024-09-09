@@ -17,14 +17,12 @@ const postCheckout = expressHandler(async (req, res) => {
     phoneNumber: req.body.phoneNumber,
     address: req.body.address,
     thanaDistrict: req.body.thanaDistrict,
-    product_quantity: req.body.product_quantity,
     delivery_charge: req.body.delivery_charge,
     totalPrice: req.body.totalPrice,
     note: req.body.note,
     order: req.body.order,
   });
 
-  console.log("checkout", req.body)
   if (!checkouts) {
     res.status(500).json({ message: "Checkouts not inserted" });
   }
