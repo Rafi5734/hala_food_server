@@ -6,12 +6,6 @@ const addToCart = async (req, res) => {
     const { userId } = req.params;
     const { _id } = req.body;
 
-    // const user = await User.findById(userId);
-
-    // if (!user) {
-    //   return res.status(404).json({ error: "User not found" });
-    // }
-
     // Find the product by ID
     const product = await Products.findById(_id);
 
