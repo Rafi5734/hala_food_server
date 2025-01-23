@@ -7,10 +7,12 @@ const {
   deleteProduct,
   postComment,
   deleteComment,
+  addImageToProduct,
 } = require("../controller/products");
 
 const productRouter = express.Router();
 productRouter.route("/").get(getProducts).post(postProducts);
+productRouter.route("/add-image-to-product").post(addImageToProduct);
 
 productRouter
   .route("/:id")

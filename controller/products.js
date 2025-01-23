@@ -1,5 +1,5 @@
 const expressHandler = require("express-async-handler");
-const Products = require("../models/products")
+const Products = require("../models/products");
 
 const getProducts = expressHandler(async (req, res) => {
   const products = await Products.find();
@@ -10,11 +10,40 @@ const getProducts = expressHandler(async (req, res) => {
   res.status(200).json(products);
 });
 
+// const postProducts = expressHandler(async (req, res) => {
+//   const products = await Products.insertMany({
+//     category: req.body.category,
+//     name: req.body.name,
+//     imageLink: req.body.imageLink,
+//     price: req.body.price,
+//     description: req.body.description,
+//     discount: req.body.discount,
+//     quantity: req.body.quantity,
+//     size: req.body.size,
+//     SKUId: req.body.SKUId,
+//     status: req.body.status,
+//     reviews: req.body.reviews,
+//     sold: req.body.sold,
+//     stock: req.body.stock,
+//     subCategory: req.body.subCategory,
+//   });
+
+//   if (!products) {
+//     res.status(500).json({ message: "Products not inserted" });
+//   }
+//   res.status(200).json(products);
+// });
+
+// POST product
 const postProducts = expressHandler(async (req, res) => {
-  const products = await Products.insertMany({
+  // Collect image links from the request body
+  const imageLinks = req.body.imageLinks; // Expecting an array of image URLs from the frontend
+
+  // Insert the product data into the database
+  const product = await Products.create({
     category: req.body.category,
     name: req.body.name,
-    imageLink: req.body.imageLink,
+    imageLinks: imageLinks, // Store the array of image URLs
     price: req.body.price,
     description: req.body.description,
     discount: req.body.discount,
@@ -28,10 +57,36 @@ const postProducts = expressHandler(async (req, res) => {
     subCategory: req.body.subCategory,
   });
 
-  if (!products) {
-    res.status(500).json({ message: "Products not inserted" });
+  if (!product) {
+    return res.status(500).json({ message: "Product not inserted" });
   }
-  res.status(200).json(products);
+
+  return res.status(200).json(product);
+});
+
+const addImageToProduct = expressHandler(async (req, res) => {
+  const { productId, url, title } = req.body; // Expecting productId, imageUrl, and title from the frontend
+
+  if (!productId || !url || !title) {
+    return res
+      .status(400)
+      .json({ message: "Product ID, image URL, and title are required" });
+  }
+
+  // Find the product by ID
+  const product = await Products.findById(productId);
+
+  if (!product) {
+    return res.status(404).json({ message: "Product not found" });
+  }
+
+  // Append the new image and title to imageLinks
+  product.imageLinks.push({ url, title });
+
+  // Save the updated product
+  const updatedProduct = await product.save();
+
+  return res.status(200).json(updatedProduct);
 });
 
 const getOneProduct = expressHandler(async (req, res) => {
@@ -49,7 +104,7 @@ const updateProduct = expressHandler(async (req, res) => {
     {
       category: req.body.category,
       name: req.body.name,
-      imageLink: req.body.imageLink,
+      imageLinks: imageLinks,
       price: req.body.price,
       description: req.body.description,
       discount: req.body.discount,
@@ -144,4 +199,5 @@ module.exports = {
   deleteProduct,
   postComment,
   deleteComment,
+  addImageToProduct,
 };

@@ -8,41 +8,34 @@ const { checkoutRouter } = require("./routes/checkoutRoutes");
 const { authRouter } = require("./routes/authRoutes");
 const { orderRouter } = require("./routes/cartRoutes");
 const cartRoutes = require("./cart");
-// DB_PASS = YNnidN2YDISvRoxP;
-// DB_NAME = hala_food;
+
 const app = express();
 const port = 8800;
 
 // Connect to MongoDB
-connectDB();
-
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+connectDB()
+  .then(() => {
+    console.log("Connected to MongoDB");
   })
-);
+  .catch((err) => {
+    console.error("Database connection error:", err);
+    process.exit(1); // Exit the application if DB connection fails
+  });
+
+// Middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-(async () => {
-  try {
-    app.use("/product", productRouter);
-    app.use("/category", categoryRouter);
-    app.use("/checkout", checkoutRouter);
-    app.use("/user", authRouter);
-    app.use("/order", orderRouter);
-    app.use("/cart", cartRoutes);
-    // app.use("/products", productsRouter);
-    // app.use("/orders", ordersRouter);
-  } catch (err) {
-    console.log("There was some error", err);
-  } finally {
-    app.get("/", (req, res) => {
-      res.send("Hala food Server 2, Yeh!");
-    });
-    app.listen(port, () => {
-      console.log("server is running on", port);
-    });
-  }
-})();
+// Routes
+app.use("/product", productRouter);
+app.use("/category", categoryRouter);
+app.use("/checkout", checkoutRouter);
+app.use("/user", authRouter);
+app.use("/order", orderRouter);
+app.use("/cart", cartRoutes);
+
+// Start the server
+app.listen(port, () => {
+  console.log("Server is running on port", port);
+});

@@ -5,12 +5,17 @@ const productsSchema = new mongoose.Schema(
   {
     category: { type: String },
     name: { type: String },
-    imageLink: { type: String },
+    imageLinks: [
+      {
+        // productId: { type: String },
+        url: { type: String, required: true }, // Image URL
+        title: { type: String, required: true }, // Optional title
+      },
+    ],
     price: { type: Number },
     description: { type: String },
     discount: { type: String },
-    quantity: { type: Number },
-    quantity: { type: String },
+    quantity: { type: Number }, // Removed duplicate `quantity`
     SKUId: { type: String },
     status: { type: String },
     stock: { type: String },
