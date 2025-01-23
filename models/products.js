@@ -5,6 +5,7 @@ const productsSchema = new mongoose.Schema(
   {
     category: { type: String },
     name: { type: String },
+    imageLink: { type: String },
     imageLinks: [
       {
         // productId: { type: String },

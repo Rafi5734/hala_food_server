@@ -43,6 +43,7 @@ const postProducts = expressHandler(async (req, res) => {
   const product = await Products.create({
     category: req.body.category,
     name: req.body.name,
+    imageLink: req.body.imageLink,
     imageLinks: imageLinks, // Store the array of image URLs
     price: req.body.price,
     description: req.body.description,
@@ -104,6 +105,7 @@ const updateProduct = expressHandler(async (req, res) => {
     {
       category: req.body.category,
       name: req.body.name,
+      imageLink: req.body.imageLink,
       imageLinks: imageLinks,
       price: req.body.price,
       description: req.body.description,
