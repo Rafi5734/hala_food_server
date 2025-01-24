@@ -5,11 +5,14 @@ const orderSchema = new mongoose.Schema({
   category: { type: String },
   name: { type: String },
   imageLink: { type: String },
-  firstImageLink: { type: String },
-  secondImageLink: { type: String },
-  thirdImageLink: { type: String },
-  fourthImageLink: { type: String },
-  fifthImageLink: { type: String },
+  imageLinks: [
+    {
+      // productId: { type: String },
+      url: { type: String, required: true }, // Image URL
+      title: { type: String, required: true }, // Optional title
+    },
+  ],
+  color: { type: String },
   price: { type: Number },
   description: { type: String },
   discount: { type: String },
