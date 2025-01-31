@@ -10,30 +10,6 @@ const getProducts = expressHandler(async (req, res) => {
   res.status(200).json(products);
 });
 
-// const postProducts = expressHandler(async (req, res) => {
-//   const products = await Products.insertMany({
-//     category: req.body.category,
-//     name: req.body.name,
-//     imageLink: req.body.imageLink,
-//     price: req.body.price,
-//     description: req.body.description,
-//     discount: req.body.discount,
-//     quantity: req.body.quantity,
-//     size: req.body.size,
-//     SKUId: req.body.SKUId,
-//     status: req.body.status,
-//     reviews: req.body.reviews,
-//     sold: req.body.sold,
-//     stock: req.body.stock,
-//     subCategory: req.body.subCategory,
-//   });
-
-//   if (!products) {
-//     res.status(500).json({ message: "Products not inserted" });
-//   }
-//   res.status(200).json(products);
-// });
-
 // POST product
 const postProducts = expressHandler(async (req, res) => {
   // Collect image links from the request body
@@ -49,6 +25,8 @@ const postProducts = expressHandler(async (req, res) => {
     description: req.body.description,
     discount: req.body.discount,
     quantity: req.body.quantity,
+    sourceName: req.body.sourceName,
+    sourceUrl: req.body.sourceUrl,
     size: req.body.size,
     SKUId: req.body.SKUId,
     status: req.body.status,
@@ -106,13 +84,16 @@ const updateProduct = expressHandler(async (req, res) => {
       category: req.body.category,
       name: req.body.name,
       imageLink: req.body.imageLink,
-      imageLinks: imageLinks,
+      imageLinks: imageLinks, // Store the array of image URLs
       price: req.body.price,
       description: req.body.description,
       discount: req.body.discount,
       quantity: req.body.quantity,
+      sourceName: req.body.sourceName,
+      sourceUrl: req.body.sourceUrl,
       size: req.body.size,
       SKUId: req.body.SKUId,
+      status: req.body.status,
       reviews: req.body.reviews,
       sold: req.body.sold,
       stock: req.body.stock,

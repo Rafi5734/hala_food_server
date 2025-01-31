@@ -21,6 +21,8 @@ const productsSchema = new mongoose.Schema(
     status: { type: String },
     stock: { type: String },
     sold: { type: String },
+    sourceName: {type: String},
+    sourceUrl: {type: String},
     reviews: [
       {
         comment_id: {
