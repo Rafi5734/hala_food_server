@@ -11,6 +11,7 @@ const checkoutSchema = new mongoose.Schema(
     delivery_charge: { type: String },
     totalPrice: { type: Number },
     order: [],
+    orderTime: { type: String },
   },
   {
     timestamps: true,

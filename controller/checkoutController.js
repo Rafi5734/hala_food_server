@@ -21,6 +21,7 @@ const postCheckout = expressHandler(async (req, res) => {
     totalPrice: req.body.totalPrice,
     note: req.body.note,
     order: req.body.order,
+    orderTime: new Date(),
   });
 
   if (!checkouts) {
@@ -38,7 +39,6 @@ const deleteCheckout = expressHandler(async (req, res) => {
     res.status(200).json({ message: "Product deleted successfully!" });
   }
 });
-
 
 module.exports = {
   getCheckout,
