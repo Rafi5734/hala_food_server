@@ -40,13 +40,12 @@ exports.getSliderById = async (req, res) => {
 // ✅ Update a slider
 exports.updateSlider = async (req, res) => {
   try {
-    const { title, description, image, status } = req.body;
+    const { title, image, status } = req.body;
 
     const slider = await Slider.findById(req.params.id);
     if (!slider) return res.status(404).json({ error: "Slider not found" });
 
     slider.title = title || slider.title;
-    slider.description = description || slider.description;
     slider.image = image || slider.image;
     slider.status = status || slider.status;
 
