@@ -10,6 +10,7 @@ const { orderRouter } = require("./routes/cartRoutes");
 // const { sliderRoutes } = require("./routes/sliderRoutes");
 const cartRoutes = require("./cart");
 const sliderRoutes = require("./routes/sliderRoutes");
+const shippingRoutes = require("./routes/shippingRoutes");
 
 const app = express();
 const port = 8800;
@@ -37,6 +38,7 @@ app.use("/user", authRouter);
 app.use("/order", orderRouter);
 app.use("/cart", cartRoutes);
 app.use("/slider", sliderRoutes);
+app.use("/shipping", shippingRoutes);
 
 // Start the server
 app.listen(port, () => {

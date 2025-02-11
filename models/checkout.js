@@ -5,13 +5,15 @@ const checkoutSchema = new mongoose.Schema(
   {
     fullName: { type: String },
     phoneNumber: { type: String },
+    district: { type: String },
+    zilla: { type: String },
     address: { type: String },
-    thanaDistrict: { type: String },
     note: { type: String },
     delivery_charge: { type: String },
     totalPrice: { type: Number },
     order: [],
     orderTime: { type: String },
+    status: { type: String, default: "pending" },
   },
   {
     timestamps: true,
