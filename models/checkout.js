@@ -5,6 +5,7 @@ const checkoutSchema = new mongoose.Schema(
   {
     fullName: { type: String },
     phoneNumber: { type: String },
+    division: { type: String },
     district: { type: String },
     zilla: { type: String },
     address: { type: String },

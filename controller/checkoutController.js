@@ -16,6 +16,7 @@ const postCheckout = expressHandler(async (req, res) => {
     fullName: req.body.fullName,
     phoneNumber: req.body.phoneNumber,
     address: req.body.address,
+    division: req.body.division,
     district: req.body.district,
     zilla: req.body.zilla,
     delivery_charge: req.body.delivery_charge,
