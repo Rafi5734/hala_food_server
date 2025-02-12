@@ -81,26 +81,11 @@ const updateProduct = expressHandler(async (req, res) => {
   const productUpdate = await Products.findByIdAndUpdate(
     req.params.id,
     {
-      category: req.body.category,
-      name: req.body.name,
-      imageLink: req.body.imageLink,
-      imageLinks: imageLinks, // Store the array of image URLs
-      price: req.body.price,
-      description: req.body.description,
-      discount: req.body.discount,
-      quantity: req.body.quantity,
-      sourceName: req.body.sourceName,
-      sourceUrl: req.body.sourceUrl,
-      size: req.body.size,
-      SKUId: req.body.SKUId,
-      status: req.body.status,
-      reviews: req.body.reviews,
-      sold: req.body.sold,
-      stock: req.body.stock,
-      subCategory: req.body.subCategory,
+      $set: req.body,
     },
     {
       new: true,
+      runValidators: true,
     }
   );
 
