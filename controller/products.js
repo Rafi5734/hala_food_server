@@ -95,6 +95,24 @@ const updateProduct = expressHandler(async (req, res) => {
   res.status(200).json(productUpdate);
 });
 
+const updateProductStatusStatus = expressHandler(async (req, res) => {
+  const productUpdateStatus = await Products.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: req.body,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!productUpdateStatus) {
+    res.status(500).json({ message: "Product status not updated" });
+  }
+  res.status(200).json(productUpdateStatus);
+});
+
 const deleteProduct = expressHandler(async (req, res) => {
   const productDelete = await Products.findByIdAndDelete(req.params.id);
 
@@ -168,4 +186,5 @@ module.exports = {
   postComment,
   deleteComment,
   addImageToProduct,
+  updateProductStatusStatus,
 };

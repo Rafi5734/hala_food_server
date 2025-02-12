@@ -8,6 +8,7 @@ const {
   postComment,
   deleteComment,
   addImageToProduct,
+  updateProductStatusStatus,
 } = require("../controller/products");
 
 const productRouter = express.Router();
@@ -18,7 +19,8 @@ productRouter
   .route("/:id")
   .get(getOneProduct)
   .put(updateProduct)
-  .delete(deleteProduct);
+  .delete(deleteProduct)
+  .put(updateProductStatusStatus);
 
 productRouter.route("/:id/comments").post(postComment);
 productRouter.route("/:id/comments/:commentId").delete(deleteComment);
