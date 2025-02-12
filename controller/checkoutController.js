@@ -24,7 +24,7 @@ const postCheckout = expressHandler(async (req, res) => {
     note: req.body.note,
     order: req.body.order,
     orderTime: new Date(),
-    status: "pending", // Default status
+    status: "pending",
   });
 
   if (!checkouts) {
@@ -42,39 +42,37 @@ const deleteCheckout = expressHandler(async (req, res) => {
   res.status(200).json({ message: "Product deleted successfully!" });
 });
 
-const updateMultipleCheckoutStatus = expressHandler(async (req, res) => {
-  const { ids } = req.body;
+const updateProductStatusStatus = expressHandler(async (req, res) => {
+  // console.log("🔹 API called for product ID:", req.params.id);
 
-  if (!ids || !Array.isArray(ids) || ids.length === 0) {
-    return res
-      .status(400)
-      .json({ message: "Invalid request, no orders selected" });
+  // Check if request body is empty
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res.status(400).json({ message: "No data provided for update" });
   }
 
-  const checkouts = await Checkout.find({
-    _id: { $in: ids },
-    status: "pending",
-  });
+  try {
+    const updatedCheckout = await Checkout.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body }, // ✅ Updates only the provided properties
+      { new: true }
+    );
 
-  console.log("Found checkouts:", checkouts);
+    if (!updatedCheckout) {
+      // console.log("❌ Checkout not found!");
+      return res.status(404).json({ message: "Checkout not found" });
+    }
 
-  if (!checkouts.length) {
-    return res
-      .status(404)
-      .json({ message: "No pending orders found for the selected IDs" });
+    // console.log("✅ Checkout updated:", updatedCheckout);
+    return res.status(200).json(updatedCheckout);
+  } catch (error) {
+    // console.error("🔥 Update error:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
-
-  await Checkout.updateMany(
-    { _id: { $in: objectIds } },
-    { status: "shipping" }
-  );
-
-  res.status(200).json({ message: "Orders updated to shipping" });
 });
 
 module.exports = {
   getCheckout,
   postCheckout,
   deleteCheckout,
-  updateMultipleCheckoutStatus,
+  updateProductStatusStatus,
 };
